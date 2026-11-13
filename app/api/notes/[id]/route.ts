@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/db";
 import { Note } from "@/lib/models/note";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function DELETE(request: NextRequest, {params}: {params: {id: string}}) {
+export async function DELETE(request: NextRequest, {params}: {params: Promise<{id: string}>}) {
     await connectDB()
     const {id} = await params;
 
@@ -11,7 +11,7 @@ export async function DELETE(request: NextRequest, {params}: {params: {id: strin
     return NextResponse.json({message: "Deleted"})
 }
 
-export async function PUT(req: NextRequest, {params}:{params: {id: string}}) {
+export async function PUT(req: NextRequest, {params}:{params: Promise<{id: string}>}) {
     await connectDB()
     const {id} = await params;
     const {title, content} = await req.json()
